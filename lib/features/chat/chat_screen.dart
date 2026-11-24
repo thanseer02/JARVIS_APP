@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../core/constants/app_enums.dart';
 import '../../core/theme/app_brand_colors.dart';
 import '../../core/theme/app_theme.dart';
@@ -59,10 +60,7 @@ class _ChatScreenState extends State<ChatScreen> {
         elevation: 1,
         title: Row(
           children: [
-            JarvisOrbWidget(
-              size: 32,
-              state: vm.orbState,
-            ),
+            JarvisOrbWidget(size: 32, state: vm.orbState),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -144,7 +142,10 @@ class _ChatScreenState extends State<ChatScreen> {
                     )
                   : ListView.builder(
                       controller: _scrollController,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                       itemCount: messages.length,
                       itemBuilder: (context, index) {
                         final msg = messages[index];
@@ -157,7 +158,10 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
             if (vm.orbState == OrbState.thinking)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 8,
+                ),
                 child: Row(
                   children: [
                     SizedBox(
@@ -229,8 +233,13 @@ class _ChatScreenState extends State<ChatScreen> {
               style: AppStyles.bodyMedium.copyWith(color: colors.textPrimary),
               decoration: InputDecoration(
                 hintText: 'Transmit message to JARVIS...',
-                hintStyle: AppStyles.bodyMedium.copyWith(color: colors.textMuted),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                hintStyle: AppStyles.bodyMedium.copyWith(
+                  color: colors.textMuted,
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 filled: true,
                 fillColor: colors.bgSurface,
                 border: OutlineInputBorder(

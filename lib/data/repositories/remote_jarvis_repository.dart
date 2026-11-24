@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import '../models/chat_message_model.dart';
 import '../models/conversation_model.dart';
 import '../services/jarvis_api_client.dart';
@@ -20,7 +19,10 @@ class RemoteJarvisRepository implements IJarvisRepository {
       final response = await _apiClient.dio.get('/api/conversations');
       if (response.statusCode == 200 && response.data is List) {
         return (response.data as List)
-            .map((item) => ConversationModel.fromJson(item as Map<String, dynamic>))
+            .map(
+              (item) =>
+                  ConversationModel.fromJson(item as Map<String, dynamic>),
+            )
             .toList();
       }
       return [];
@@ -34,7 +36,9 @@ class RemoteJarvisRepository implements IJarvisRepository {
     try {
       final response = await _apiClient.dio.get('/api/conversations/$id');
       if (response.statusCode == 200 && response.data != null) {
-        return ConversationModel.fromJson(response.data as Map<String, dynamic>);
+        return ConversationModel.fromJson(
+          response.data as Map<String, dynamic>,
+        );
       }
       return null;
     } catch (_) {
@@ -47,7 +51,9 @@ class RemoteJarvisRepository implements IJarvisRepository {
     final response = await _apiClient.dio.post(
       '/api/conversations',
       data: {
-        'title': initialTitle ?? 'Protocol ${DateTime.now().hour}:${DateTime.now().minute}',
+        'title':
+            initialTitle ??
+            'Protocol ${DateTime.now().hour}:${DateTime.now().minute}',
       },
     );
     return ConversationModel.fromJson(response.data as Map<String, dynamic>);
@@ -70,10 +76,7 @@ class RemoteJarvisRepository implements IJarvisRepository {
   }) async {
     final response = await _apiClient.dio.post(
       '/api/chat',
-      data: {
-        'conversationId': conversationId,
-        'message': text,
-      },
+      data: {'conversationId': conversationId, 'message': text},
     );
     return ChatMessageModel.fromJson(response.data as Map<String, dynamic>);
   }

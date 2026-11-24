@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../core/theme/app_brand_colors.dart';
-import '../../core/theme/app_theme.dart';
-import '../../data/models/chat_message_model.dart';
+
+import '../../../core/theme/app_theme.dart';
+import '../../../data/models/chat_message_model.dart';
 
 class FuturisticChatBubble extends StatelessWidget {
   final ChatMessageModel message;
   final VoidCallback? onRetry;
 
-  const FuturisticChatBubble({
-    super.key,
-    required this.message,
-    this.onRetry,
-  });
+  const FuturisticChatBubble({super.key, required this.message, this.onRetry});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +35,9 @@ class FuturisticChatBubble extends StatelessWidget {
             bottomRight: Radius.circular(isUser ? 4 : 16),
           ),
           border: Border.all(
-            color: isUser ? colors.cyanAccent.withOpacity(0.6) : colors.borderSubtle,
+            color: isUser
+                ? colors.cyanAccent.withOpacity(0.6)
+                : colors.borderSubtle,
             width: 1,
           ),
           boxShadow: [
@@ -53,8 +51,9 @@ class FuturisticChatBubble extends StatelessWidget {
           ],
         ),
         child: Column(
-          crossAxisAlignment:
-              isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          crossAxisAlignment: isUser
+              ? CrossAxisAlignment.end
+              : CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisSize: MainAxisSize.min,

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import '../models/chat_message_model.dart';
 import '../models/conversation_model.dart';
 import 'jarvis_repository_interface.dart';
@@ -10,7 +11,8 @@ class MockJarvisRepository implements IJarvisRepository {
       title: 'Neural Core Diagnostic',
       createdAt: DateTime.now().subtract(const Duration(hours: 3)),
       updatedAt: DateTime.now().subtract(const Duration(minutes: 25)),
-      lastMessagePreview: 'All subsystems calibrated. Quantum efficiency 99.4%.',
+      lastMessagePreview:
+          'All subsystems calibrated. Quantum efficiency 99.4%.',
       messages: [
         ChatMessageModel(
           id: 'msg_01',
@@ -24,7 +26,9 @@ class MockJarvisRepository implements IJarvisRepository {
           conversationId: 'conv_alpha_01',
           text: 'Running full diagnostics on all modules. Memory integrity verified. Processing core online.',
           sender: MessageSender.assistant,
-          timestamp: DateTime.now().subtract(const Duration(hours: 3, minutes: -1)),
+          timestamp: DateTime.now().subtract(
+            const Duration(hours: 3, minutes: -1),
+          ),
         ),
         ChatMessageModel(
           id: 'msg_03',
@@ -94,7 +98,9 @@ class MockJarvisRepository implements IJarvisRepository {
     await Future.delayed(const Duration(milliseconds: 350));
     final newConv = ConversationModel(
       id: 'conv_${DateTime.now().millisecondsSinceEpoch}',
-      title: initialTitle ?? 'Protocol ${DateTime.now().hour}:${DateTime.now().minute}',
+      title:
+          initialTitle ??
+          'Protocol ${DateTime.now().hour}:${DateTime.now().minute}',
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
       lastMessagePreview: 'Initiated new channel.',
@@ -127,7 +133,9 @@ class MockJarvisRepository implements IJarvisRepository {
       timestamp: DateTime.now(),
     );
 
-    final convIndex = _mockConversations.indexWhere((c) => c.id == conversationId);
+    final convIndex = _mockConversations.indexWhere(
+      (c) => c.id == conversationId,
+    );
     if (convIndex != -1) {
       final conv = _mockConversations[convIndex];
       final updatedList = List<ChatMessageModel>.from(conv.messages)
@@ -137,7 +145,9 @@ class MockJarvisRepository implements IJarvisRepository {
             conversationId: conversationId,
             text: text,
             sender: MessageSender.user,
-            timestamp: DateTime.now().subtract(const Duration(milliseconds: 1300)),
+            timestamp: DateTime.now().subtract(
+              const Duration(milliseconds: 1300),
+            ),
           ),
         )
         ..add(responseMsg);

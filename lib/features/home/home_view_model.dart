@@ -1,5 +1,7 @@
 import 'dart:async';
+
 import 'package:flutter/foundation.dart';
+
 import '../../core/constants/app_enums.dart';
 import '../../data/models/chat_message_model.dart';
 import '../../data/models/conversation_model.dart';
@@ -8,9 +10,9 @@ import '../../data/services/jarvis_api_client.dart';
 import '../voice/voice_service.dart';
 
 class JarvisMainViewModel extends ChangeNotifier {
-  final IJarvisRepository _repository;
-  final IVoiceService _voiceService;
-  final JarvisApiClient _apiClient;
+  final IJarvisRepository repository;
+  final IVoiceService voiceService;
+  final JarvisApiClient apiClient;
 
   OrbState _orbState = OrbState.idle;
   BackendConnectionStatus _connectionStatus = BackendConnectionStatus.mockMode;
@@ -20,12 +22,10 @@ class JarvisMainViewModel extends ChangeNotifier {
   String? _errorMessage;
 
   JarvisMainViewModel({
-    required IJarvisRepository repository,
-    required IVoiceService voiceService,
-    required JarvisApiClient apiClient,
-  })  : _repository = repository,
-        _voiceService = voiceService,
-        _apiClient = apiClient {
+    required this.repository,
+    required this.voiceService,
+    required this.apiClient,
+  }) {
     init();
   }
 
@@ -36,10 +36,9 @@ class JarvisMainViewModel extends ChangeNotifier {
   ConversationModel? get activeConversation => _activeConversation;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
-  bool get isVoiceMuted => _voiceService.isMuted;
-  bool get isVoiceListening => _voiceService.isListening;
-  bool get isVoiceSpeaking => _voiceService.isSpeaking;
-  JarvisApiClient get apiClient => _apiClient;
+  bool get isVoiceMuted => voiceService.isMuted;
+  bool get isVoiceListening => voiceService.isListening;
+  bool get isVoiceSpeaking => voiceService.isSpeaking;
 
   Future<void> init() async {
     _isLoading = true;
@@ -53,12 +52,12 @@ class JarvisMainViewModel extends ChangeNotifier {
   }
 
   Future<void> refreshConnectionStatus() async {
-    if (_apiClient.config.useMock) {
+    if (apiClient.config.useMock) {
       _connectionStatus = BackendConnectionStatus.mockMode;
     } else {
       _connectionStatus = BackendConnectionStatus.connecting;
       notifyListeners();
-      final isHealthy = await _repository.checkBackendHealth();
+      final isHealthy = await repository.checkBackendHealth();
       _connectionStatus = isHealthy
           ? BackendConnectionStatus.connected
           : BackendConnectionStatus.disconnected;
@@ -68,7 +67,7 @@ class JarvisMainViewModel extends ChangeNotifier {
 
   Future<void> loadRecentConversations() async {
     try {
-      _recentConversations = await _repository.getConversations();
+      _recentConversations = await repository.getConversations();
       notifyListeners();
     } catch (e) {
       _errorMessage = e.toString();
@@ -83,7 +82,7 @@ class JarvisMainViewModel extends ChangeNotifier {
 
   Future<ConversationModel> startNewConversation({String? title}) async {
     _setLoading(true);
-    final conv = await _repository.createConversation(initialTitle: title);
+    final conv = await repository.createConversation(initialTitle: title);
     _activeConversation = conv;
     await loadRecentConversations();
     _setLoading(false);
@@ -92,12 +91,12 @@ class JarvisMainViewModel extends ChangeNotifier {
 
   Future<void> selectConversation(String id) async {
     _setLoading(true);
-    _activeConversation = await _repository.getConversationById(id);
+    _activeConversation = await repository.getConversationById(id);
     _setLoading(false);
   }
 
   Future<void> deleteConversation(String id) async {
-    await _repository.deleteConversation(id);
+    await repository.deleteConversation(id);
     if (_activeConversation?.id == id) {
       _activeConversation = null;
     }
@@ -132,16 +131,17 @@ class JarvisMainViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final assistantReply = await _repository.sendMessage(
+      final assistantReply = await repository.sendMessage(
         conversationId: convId,
         text: text.trim(),
       );
 
       // Replace with confirmed response
-      final updatedList = List<ChatMessageModel>.from(_activeConversation!.messages)
-        ..removeWhere((m) => m.id == userMsg.id)
-        ..add(userMsg.copyWith(isPending: false))
-        ..add(assistantReply);
+      final updatedList =
+          List<ChatMessageModel>.from(_activeConversation!.messages)
+            ..removeWhere((m) => m.id == userMsg.id)
+            ..add(userMsg.copyWith(isPending: false))
+            ..add(assistantReply);
 
       _activeConversation = _activeConversation!.copyWith(
         messages: updatedList,
@@ -153,7 +153,7 @@ class JarvisMainViewModel extends ChangeNotifier {
       notifyListeners();
 
       // Trigger Voice TTS
-      await _voiceService.speak(
+      await voiceService.speak(
         assistantReply.text,
         onComplete: () {
           _orbState = OrbState.idle;
@@ -171,20 +171,20 @@ class JarvisMainViewModel extends ChangeNotifier {
   }
 
   void toggleVoiceMute() {
-    _voiceService.setMuted(!_voiceService.isMuted);
+    voiceService.setMuted(!voiceService.isMuted);
     notifyListeners();
   }
 
   Future<void> triggerVoiceInput() async {
-    if (_voiceService.isSpeaking) {
-      await _voiceService.stopSpeaking();
+    if (voiceService.isSpeaking) {
+      await voiceService.stopSpeaking();
       _orbState = OrbState.idle;
       notifyListeners();
       return;
     }
 
-    if (_voiceService.isListening) {
-      await _voiceService.stopListening();
+    if (voiceService.isListening) {
+      await voiceService.stopListening();
       _orbState = OrbState.idle;
       notifyListeners();
       return;
@@ -193,7 +193,7 @@ class JarvisMainViewModel extends ChangeNotifier {
     _orbState = OrbState.listening;
     notifyListeners();
 
-    await _voiceService.startListening(
+    await voiceService.startListening(
       onResult: (spokenText) {
         sendChatMessage(spokenText);
       },

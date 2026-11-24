@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
 import '../../core/constants/app_routes.dart';
 import '../../core/theme/app_brand_colors.dart';
 import '../../core/theme/app_theme.dart';
@@ -57,21 +58,34 @@ class ConversationDetailsScreen extends StatelessWidget {
                 context: context,
                 builder: (ctx) => AlertDialog(
                   backgroundColor: colors.bgSurface,
-                  title: Text('Purge Protocol', style: TextStyle(color: colors.textPrimary)),
-                  content: Text('Are you sure you want to delete this conversation?', style: TextStyle(color: colors.textSecondary)),
+                  title: Text(
+                    'Purge Protocol',
+                    style: TextStyle(color: colors.textPrimary),
+                  ),
+                  content: Text(
+                    'Are you sure you want to delete this conversation?',
+                    style: TextStyle(color: colors.textSecondary),
+                  ),
                   actions: [
-                    TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+                    TextButton(
+                      onPressed: () => Navigator.pop(ctx, false),
+                      child: const Text('Cancel'),
+                    ),
                     FilledButton(
-                      style: FilledButton.styleFrom(backgroundColor: colors.crimsonAlert),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: colors.crimsonAlert,
+                      ),
                       onPressed: () => Navigator.pop(ctx, true),
                       child: const Text('Delete'),
                     ),
                   ],
                 ),
               );
-              if (confirm == true && context.mounted) {
+              if (confirm == true) {
                 await vm.deleteConversation(conv.id);
-                Navigator.pop(context);
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
               }
             },
           ),
@@ -89,7 +103,10 @@ class ConversationDetailsScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: colors.borderCyan),
                 boxShadow: [
-                  BoxShadow(color: colors.cyanAccent.withOpacity(0.08), blurRadius: 16),
+                  BoxShadow(
+                    color: colors.cyanAccent.withOpacity(0.08),
+                    blurRadius: 16,
+                  ),
                 ],
               ),
               child: Column(
@@ -99,18 +116,28 @@ class ConversationDetailsScreen extends StatelessWidget {
                     children: [
                       Icon(Icons.terminal, color: colors.cyanAccent),
                       const SizedBox(width: 8),
-                      Text('PROTOCOL ID', style: AppStyles.hudMono.copyWith(color: colors.cyanAccent)),
+                      Text(
+                        'PROTOCOL ID',
+                        style: AppStyles.hudMono.copyWith(
+                          color: colors.cyanAccent,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 8),
                   Text(
                     conv.title,
-                    style: AppStyles.titleLarge.copyWith(color: colors.textPrimary),
+                    style: AppStyles.titleLarge.copyWith(
+                      color: colors.textPrimary,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     conv.id,
-                    style: AppStyles.hudMono.copyWith(color: colors.textMuted, fontSize: 10),
+                    style: AppStyles.hudMono.copyWith(
+                      color: colors.textMuted,
+                      fontSize: 10,
+                    ),
                   ),
                 ],
               ),
@@ -118,21 +145,51 @@ class ConversationDetailsScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // Telemetry Grid
-            Text('TELEMETRY STATS', style: AppStyles.caption.copyWith(color: colors.textSecondary, letterSpacing: 1.5)),
+            Text(
+              'TELEMETRY STATS',
+              style: AppStyles.caption.copyWith(
+                color: colors.textSecondary,
+                letterSpacing: 1.5,
+              ),
+            ),
             const SizedBox(height: 12),
             Row(
               children: [
-                _buildStatBox(context, 'OPERATOR MSGS', '$userMsgCount', Icons.person_outline, colors.cyanAccent),
+                _buildStatBox(
+                  context,
+                  'OPERATOR MSGS',
+                  '$userMsgCount',
+                  Icons.person_outline,
+                  colors.cyanAccent,
+                ),
                 const SizedBox(width: 12),
-                _buildStatBox(context, 'JARVIS MSGS', '$aiMsgCount', Icons.smart_toy_outlined, colors.neonTeal),
+                _buildStatBox(
+                  context,
+                  'JARVIS MSGS',
+                  '$aiMsgCount',
+                  Icons.smart_toy_outlined,
+                  colors.neonTeal,
+                ),
               ],
             ),
             const SizedBox(height: 12),
             Row(
               children: [
-                _buildStatBox(context, 'TOTAL LOGS', '${conv.messages.length}', Icons.storage, colors.electricBlue),
+                _buildStatBox(
+                  context,
+                  'TOTAL LOGS',
+                  '${conv.messages.length}',
+                  Icons.storage,
+                  colors.electricBlue,
+                ),
                 const SizedBox(width: 12),
-                _buildStatBox(context, 'STATUS', 'ARCHIVED', Icons.verified_outlined, colors.amberWarning),
+                _buildStatBox(
+                  context,
+                  'STATUS',
+                  'ARCHIVED',
+                  Icons.verified_outlined,
+                  colors.amberWarning,
+                ),
               ],
             ),
             const SizedBox(height: 24),
@@ -161,12 +218,16 @@ class ConversationDetailsScreen extends StatelessWidget {
                 backgroundColor: colors.cyanAccent,
                 foregroundColor: colors.bgPrimary,
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
               icon: const Icon(Icons.chat_bubble_outline),
               label: Text(
                 'RESUME THIS TRANSMISSION',
-                style: AppStyles.bodyLarge.copyWith(fontWeight: FontWeight.bold),
+                style: AppStyles.bodyLarge.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               onPressed: () {
                 Navigator.pushReplacementNamed(context, AppRoutes.chat);
@@ -200,7 +261,13 @@ class ConversationDetailsScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(label, style: AppStyles.hudMono.copyWith(fontSize: 10, color: colors.textMuted)),
+                Text(
+                  label,
+                  style: AppStyles.hudMono.copyWith(
+                    fontSize: 10,
+                    color: colors.textMuted,
+                  ),
+                ),
                 Icon(icon, size: 16, color: accent),
               ],
             ),
@@ -222,8 +289,20 @@ class ConversationDetailsScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: AppStyles.hudMono.copyWith(color: colors.textSecondary, fontSize: 11)),
-        Text(value, style: AppStyles.hudMono.copyWith(color: colors.cyanAccent, fontSize: 11)),
+        Text(
+          label,
+          style: AppStyles.hudMono.copyWith(
+            color: colors.textSecondary,
+            fontSize: 11,
+          ),
+        ),
+        Text(
+          value,
+          style: AppStyles.hudMono.copyWith(
+            color: colors.cyanAccent,
+            fontSize: 11,
+          ),
+        ),
       ],
     );
   }

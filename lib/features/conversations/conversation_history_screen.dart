@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
 import '../../core/constants/app_routes.dart';
 import '../../core/theme/app_brand_colors.dart';
 import '../../core/theme/app_theme.dart';
@@ -74,7 +75,9 @@ class _ConversationHistoryScreenState extends State<ConversationHistoryScreen> {
                 style: AppStyles.bodyMedium.copyWith(color: colors.textPrimary),
                 decoration: InputDecoration(
                   hintText: 'Search archive by title or transmission...',
-                  hintStyle: AppStyles.bodyMedium.copyWith(color: colors.textMuted),
+                  hintStyle: AppStyles.bodyMedium.copyWith(
+                    color: colors.textMuted,
+                  ),
                   prefixIcon: Icon(Icons.search, color: colors.cyanAccent),
                   filled: true,
                   fillColor: colors.bgSurface,
@@ -103,7 +106,9 @@ class _ConversationHistoryScreenState extends State<ConversationHistoryScreen> {
                   ? Center(
                       child: Text(
                         'No archives match your query.',
-                        style: AppStyles.bodyMedium.copyWith(color: colors.textMuted),
+                        style: AppStyles.bodyMedium.copyWith(
+                          color: colors.textMuted,
+                        ),
                       ),
                     )
                   : ListView.builder(
@@ -111,7 +116,12 @@ class _ConversationHistoryScreenState extends State<ConversationHistoryScreen> {
                       itemCount: filtered.length,
                       itemBuilder: (context, index) {
                         final conv = filtered[index];
-                        return _buildConversationItem(context, conv, vm, colors);
+                        return _buildConversationItem(
+                          context,
+                          conv,
+                          vm,
+                          colors,
+                        );
                       },
                     ),
             ),
@@ -159,10 +169,15 @@ class _ConversationHistoryScreenState extends State<ConversationHistoryScreen> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(ctx, false),
-                child: Text('Cancel', style: TextStyle(color: colors.textSecondary)),
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(color: colors.textSecondary),
+                ),
               ),
               FilledButton(
-                style: FilledButton.styleFrom(backgroundColor: colors.crimsonAlert),
+                style: FilledButton.styleFrom(
+                  backgroundColor: colors.crimsonAlert,
+                ),
                 onPressed: () => Navigator.pop(ctx, true),
                 child: const Text('Purge'),
               ),
@@ -181,7 +196,10 @@ class _ConversationHistoryScreenState extends State<ConversationHistoryScreen> {
           border: Border.all(color: colors.borderSubtle),
         ),
         child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
           leading: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -189,7 +207,11 @@ class _ConversationHistoryScreenState extends State<ConversationHistoryScreen> {
               color: colors.cyanAccent.withOpacity(0.12),
               border: Border.all(color: colors.borderCyan),
             ),
-            child: Icon(Icons.forum_outlined, color: colors.cyanAccent, size: 20),
+            child: Icon(
+              Icons.forum_outlined,
+              color: colors.cyanAccent,
+              size: 20,
+            ),
           ),
           title: Text(
             conv.title,
@@ -206,7 +228,9 @@ class _ConversationHistoryScreenState extends State<ConversationHistoryScreen> {
               const SizedBox(height: 4),
               Text(
                 conv.lastMessagePreview ?? 'No transmission logs recorded.',
-                style: AppStyles.bodyMedium.copyWith(color: colors.textSecondary),
+                style: AppStyles.bodyMedium.copyWith(
+                  color: colors.textSecondary,
+                ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
 import '../../core/constants/app_enums.dart';
 import '../../core/constants/app_routes.dart';
 import '../../core/theme/app_brand_colors.dart';
@@ -41,7 +42,11 @@ class HomeScreen extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: colors.cyanAccent,
                 boxShadow: [
-                  BoxShadow(color: colors.cyanAccent, blurRadius: 6, spreadRadius: 1),
+                  BoxShadow(
+                    color: colors.cyanAccent,
+                    blurRadius: 6,
+                    spreadRadius: 1,
+                  ),
                 ],
               ),
             ),
@@ -60,7 +65,8 @@ class HomeScreen extends StatelessWidget {
             builder: (context, vm, _) {
               return StatusBadgeWidget(
                 status: vm.connectionStatus,
-                onTap: () => Navigator.pushNamed(context, AppRoutes.backendConnection),
+                onTap: () =>
+                    Navigator.pushNamed(context, AppRoutes.backendConnection),
               );
             },
           ),
@@ -97,12 +103,17 @@ class HomeScreen extends StatelessWidget {
                       ),
                       Text(
                         dateStr.toUpperCase(),
-                        style: AppStyles.caption.copyWith(color: colors.textSecondary),
+                        style: AppStyles.caption.copyWith(
+                          color: colors.textSecondary,
+                        ),
                       ),
                     ],
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: colors.bgSurface,
                       borderRadius: BorderRadius.circular(8),
@@ -110,7 +121,9 @@ class HomeScreen extends StatelessWidget {
                     ),
                     child: Text(
                       timeStr,
-                      style: AppStyles.hudMono.copyWith(color: colors.cyanAccent),
+                      style: AppStyles.hudMono.copyWith(
+                        color: colors.cyanAccent,
+                      ),
                     ),
                   ),
                 ],
@@ -159,7 +172,9 @@ class HomeScreen extends StatelessWidget {
                       return _buildQuickAction(
                         context,
                         icon: vm.isVoiceListening ? Icons.mic : Icons.mic_none,
-                        label: vm.isVoiceListening ? 'Listening...' : 'Voice Command',
+                        label: vm.isVoiceListening
+                            ? 'Listening...'
+                            : 'Voice Command',
                         isPrimary: true,
                         onTap: () => vm.triggerVoiceInput(),
                       );
@@ -171,7 +186,10 @@ class HomeScreen extends StatelessWidget {
                     icon: Icons.history,
                     label: 'History',
                     onTap: () {
-                      Navigator.pushNamed(context, AppRoutes.conversationHistory);
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.conversationHistory,
+                      );
                     },
                   ),
                 ],
@@ -191,8 +209,10 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, AppRoutes.conversationHistory),
+                    onPressed: () => Navigator.pushNamed(
+                      context,
+                      AppRoutes.conversationHistory,
+                    ),
                     child: Text(
                       'VIEW ALL',
                       style: AppStyles.hudMono.copyWith(
@@ -219,7 +239,9 @@ class HomeScreen extends StatelessWidget {
                       child: Center(
                         child: Text(
                           'No recent protocols logged.',
-                          style: AppStyles.bodyMedium.copyWith(color: colors.textMuted),
+                          style: AppStyles.bodyMedium.copyWith(
+                            color: colors.textMuted,
+                          ),
                         ),
                       ),
                     );
@@ -263,7 +285,9 @@ class HomeScreen extends StatelessWidget {
     bool isPrimary = false,
   }) {
     final colors = context.brand;
-    final bg = isPrimary ? colors.cyanAccent.withOpacity(0.18) : colors.bgSurface;
+    final bg = isPrimary
+        ? colors.cyanAccent.withOpacity(0.18)
+        : colors.bgSurface;
     final border = isPrimary ? colors.cyanAccent : colors.borderSubtle;
     final iconColor = isPrimary ? colors.cyanAccent : colors.textPrimary;
 

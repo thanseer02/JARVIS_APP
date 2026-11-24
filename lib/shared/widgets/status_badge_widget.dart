@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+
 import '../../core/constants/app_enums.dart';
-import '../../core/theme/app_brand_colors.dart';
 import '../../core/theme/app_theme.dart';
 
 class StatusBadgeWidget extends StatelessWidget {
   final BackendConnectionStatus status;
   final VoidCallback? onTap;
 
-  const StatusBadgeWidget({
-    super.key,
-    required this.status,
-    this.onTap,
-  });
+  const StatusBadgeWidget({super.key, required this.status, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +47,7 @@ class StatusBadgeWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: badgeColor.withOpacity(0.12),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: badgeColor.withOpacity(0.4),
-            width: 1,
-          ),
+          border: Border.all(color: badgeColor.withOpacity(0.4), width: 1),
           boxShadow: [
             BoxShadow(
               color: badgeColor.withOpacity(0.2),
@@ -73,11 +66,7 @@ class StatusBadgeWidget extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: badgeColor,
                 boxShadow: [
-                  BoxShadow(
-                    color: badgeColor,
-                    blurRadius: 6,
-                    spreadRadius: 2,
-                  ),
+                  BoxShadow(color: badgeColor, blurRadius: 6, spreadRadius: 2),
                 ],
               ),
             ),

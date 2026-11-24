@@ -1,8 +1,9 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+
 import '../../core/constants/app_enums.dart';
 import '../../core/constants/app_routes.dart';
-import '../../core/theme/app_brand_colors.dart';
 import '../../core/theme/app_theme.dart';
 import '../../shared/widgets/jarvis_orb_widget.dart';
 
@@ -72,22 +73,14 @@ class _SplashScreenState extends State<SplashScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const JarvisOrbWidget(
-                  size: 200,
-                  state: OrbState.thinking,
-                ),
+                const JarvisOrbWidget(size: 200, state: OrbState.thinking),
                 const SizedBox(height: 36),
                 Text(
                   'J . A . R . V . I . S',
                   style: AppStyles.displayLarge.copyWith(
                     color: colors.textPrimary,
                     letterSpacing: 4.0,
-                    shadows: [
-                      Shadow(
-                        color: colors.cyanAccent,
-                        blurRadius: 16,
-                      ),
-                    ],
+                    shadows: [Shadow(color: colors.cyanAccent, blurRadius: 16)],
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -100,7 +93,10 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
                 const SizedBox(height: 48),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
                     color: colors.bgSecondary.withOpacity(0.8),
                     borderRadius: BorderRadius.circular(8),

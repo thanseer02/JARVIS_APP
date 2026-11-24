@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import '../../core/constants/app_enums.dart';
 
 class BackendConfig {
   String baseUrl;
@@ -20,7 +19,7 @@ class JarvisApiClient {
   late final Dio _dio;
 
   JarvisApiClient({BackendConfig? config})
-      : config = config ?? BackendConfig() {
+    : config = config ?? BackendConfig() {
     _dio = Dio(
       BaseOptions(
         baseUrl: this.config.baseUrl,

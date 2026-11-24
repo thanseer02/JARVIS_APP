@@ -1,8 +1,4 @@
-enum MessageSender {
-  user,
-  assistant,
-  system,
-}
+enum MessageSender { user, assistant, system }
 
 class ChatMessageModel {
   final String id;
