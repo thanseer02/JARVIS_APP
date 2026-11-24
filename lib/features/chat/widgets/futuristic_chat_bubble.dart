@@ -26,7 +26,7 @@ class FuturisticChatBubble extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
           color: isUser
-              ? colors.cyanAccent.withOpacity(0.14)
+              ? colors.cyanAccent.withValues(alpha: 0.14)
               : colors.bgSurface,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(16),
@@ -36,15 +36,15 @@ class FuturisticChatBubble extends StatelessWidget {
           ),
           border: Border.all(
             color: isUser
-                ? colors.cyanAccent.withOpacity(0.6)
+                ? colors.cyanAccent.withValues(alpha: 0.6)
                 : colors.borderSubtle,
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
               color: isUser
-                  ? colors.cyanAccent.withOpacity(0.12)
-                  : Colors.black.withOpacity(0.2),
+                  ? colors.cyanAccent.withValues(alpha: 0.12)
+                  : Colors.black.withValues(alpha: 0.2),
               blurRadius: 10,
               offset: const Offset(0, 2),
             ),

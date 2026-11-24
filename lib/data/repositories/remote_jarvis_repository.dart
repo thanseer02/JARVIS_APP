@@ -78,6 +78,10 @@ class RemoteJarvisRepository implements IJarvisRepository {
       '/api/chat',
       data: {'conversationId': conversationId, 'message': text},
     );
-    return ChatMessageModel.fromJson(response.data as Map<String, dynamic>);
+    final data = response.data as Map<String, dynamic>;
+    if (data.containsKey('message') && data['message'] is Map) {
+      return ChatMessageModel.fromJson(data['message'] as Map<String, dynamic>);
+    }
+    return ChatMessageModel.fromJson(data);
   }
 }

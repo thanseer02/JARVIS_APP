@@ -147,7 +147,7 @@ class _ConversationHistoryScreenState extends State<ConversationHistoryScreen> {
         padding: const EdgeInsets.only(right: 20),
         alignment: Alignment.centerRight,
         decoration: BoxDecoration(
-          color: colors.crimsonAlert.withOpacity(0.2),
+          color: colors.crimsonAlert.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: colors.crimsonAlert),
         ),
@@ -204,7 +204,7 @@ class _ConversationHistoryScreenState extends State<ConversationHistoryScreen> {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: colors.cyanAccent.withOpacity(0.12),
+              color: colors.cyanAccent.withValues(alpha: 0.12),
               border: Border.all(color: colors.borderCyan),
             ),
             child: Icon(

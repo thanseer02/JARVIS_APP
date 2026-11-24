@@ -175,8 +175,8 @@ class _JarvisOrbPainter extends CustomPainter {
     final glowPaint = Paint()
       ..shader = RadialGradient(
         colors: [
-          primaryColor.withOpacity(0.35 + (pulseValue * 0.2)),
-          secondaryColor.withOpacity(0.12),
+          primaryColor.withValues(alpha: 0.35 + (pulseValue * 0.2)),
+          secondaryColor.withValues(alpha: 0.12),
           Colors.transparent,
         ],
         stops: const [0.0, 0.55, 1.0],
@@ -188,7 +188,7 @@ class _JarvisOrbPainter extends CustomPainter {
     final ringPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.6
-      ..color = primaryColor.withOpacity(0.7);
+      ..color = primaryColor.withValues(alpha: 0.7);
 
     // Outer Gyro Ring (Rotating Clockwise)
     _drawDashedArc(
@@ -212,7 +212,7 @@ class _JarvisOrbPainter extends CustomPainter {
     final midPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.2
-      ..color = secondaryColor.withOpacity(0.65);
+      ..color = secondaryColor.withValues(alpha: 0.65);
 
     _drawDashedArc(
       canvas,
@@ -235,7 +235,7 @@ class _JarvisOrbPainter extends CustomPainter {
     final innerRingPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.8
-      ..color = primaryColor.withOpacity(0.85);
+      ..color = primaryColor.withValues(alpha: 0.85);
 
     _drawDashedArc(
       canvas,
@@ -251,18 +251,18 @@ class _JarvisOrbPainter extends CustomPainter {
       final wavePaint = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1.5
-        ..color = primaryColor.withOpacity(0.8);
+        ..color = primaryColor.withValues(alpha: 0.8);
 
       final waveRadius = radius * (0.65 + (waveValue * 0.25));
       final opacity = (1.0 - waveValue).clamp(0.0, 1.0);
-      wavePaint.color = primaryColor.withOpacity(opacity * 0.75);
+      wavePaint.color = primaryColor.withValues(alpha: opacity * 0.75);
       canvas.drawCircle(center, waveRadius, wavePaint);
     }
 
     // 4. Tactical Radar Crosshairs / Tick Marks
     final tickPaint = Paint()
       ..strokeWidth = 1.4
-      ..color = primaryColor.withOpacity(0.5);
+      ..color = primaryColor.withValues(alpha: 0.5);
 
     for (int i = 0; i < 12; i++) {
       final angle = (i * 30) * math.pi / 180 + (rotationAngle * 0.3);
@@ -287,7 +287,7 @@ class _JarvisOrbPainter extends CustomPainter {
         colors: [
           Colors.white,
           primaryColor,
-          secondaryColor.withOpacity(0.8),
+          secondaryColor.withValues(alpha: 0.8),
           Colors.transparent,
         ],
         stops: const [0.0, 0.45, 0.85, 1.0],
@@ -299,7 +299,7 @@ class _JarvisOrbPainter extends CustomPainter {
     final coreBorderPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0
-      ..color = Colors.white.withOpacity(0.9);
+      ..color = Colors.white.withValues(alpha: 0.9);
     canvas.drawCircle(center, coreRadius * 0.65, coreBorderPaint);
   }
 

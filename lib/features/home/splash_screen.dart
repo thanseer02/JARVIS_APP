@@ -87,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen>
                 Text(
                   'JUST A RATHER VERY INTELLIGENT SYSTEM',
                   style: AppStyles.caption.copyWith(
-                    color: colors.cyanAccent.withOpacity(0.8),
+                    color: colors.cyanAccent.withValues(alpha: 0.8),
                     letterSpacing: 2.0,
                   ),
                 ),
@@ -98,7 +98,7 @@ class _SplashScreenState extends State<SplashScreen>
                     vertical: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: colors.bgSecondary.withOpacity(0.8),
+                    color: colors.bgSecondary.withValues(alpha: 0.8),
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: colors.borderCyan, width: 1),
                   ),

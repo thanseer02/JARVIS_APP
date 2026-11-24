@@ -286,7 +286,7 @@ class HomeScreen extends StatelessWidget {
   }) {
     final colors = context.brand;
     final bg = isPrimary
-        ? colors.cyanAccent.withOpacity(0.18)
+        ? colors.cyanAccent.withValues(alpha: 0.18)
         : colors.bgSurface;
     final border = isPrimary ? colors.cyanAccent : colors.borderSubtle;
     final iconColor = isPrimary ? colors.cyanAccent : colors.textPrimary;
@@ -304,7 +304,7 @@ class HomeScreen extends StatelessWidget {
             boxShadow: isPrimary
                 ? [
                     BoxShadow(
-                      color: colors.cyanAccent.withOpacity(0.2),
+                      color: colors.cyanAccent.withValues(alpha: 0.2),
                       blurRadius: 12,
                       spreadRadius: 1,
                     ),
@@ -349,7 +349,7 @@ class HomeScreen extends StatelessWidget {
         leading: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: colors.cyanAccent.withOpacity(0.1),
+            color: colors.cyanAccent.withValues(alpha: 0.1),
             shape: BoxShape.circle,
             border: Border.all(color: colors.borderCyan),
           ),

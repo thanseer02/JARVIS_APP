@@ -45,12 +45,15 @@ class StatusBadgeWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          color: badgeColor.withOpacity(0.12),
+          color: badgeColor.withValues(alpha: 0.12),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: badgeColor.withOpacity(0.4), width: 1),
+          border: Border.all(
+            color: badgeColor.withValues(alpha: 0.4),
+            width: 1,
+          ),
           boxShadow: [
             BoxShadow(
-              color: badgeColor.withOpacity(0.2),
+              color: badgeColor.withValues(alpha: 0.2),
               blurRadius: 8,
               spreadRadius: 1,
             ),

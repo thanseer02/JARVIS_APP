@@ -104,7 +104,7 @@ class ConversationDetailsScreen extends StatelessWidget {
                 border: Border.all(color: colors.borderCyan),
                 boxShadow: [
                   BoxShadow(
-                    color: colors.cyanAccent.withOpacity(0.08),
+                    color: colors.cyanAccent.withValues(alpha: 0.08),
                     blurRadius: 16,
                   ),
                 ],

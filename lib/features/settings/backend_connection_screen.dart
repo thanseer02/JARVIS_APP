@@ -318,7 +318,7 @@ class _BackendConnectionScreenState extends State<BackendConnectionScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
             decoration: BoxDecoration(
-              color: colors.cyanAccent.withOpacity(0.12),
+              color: colors.cyanAccent.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(4),
             ),
             child: Text(
