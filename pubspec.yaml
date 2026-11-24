@@ -31,14 +31,9 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^6.1.2
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   genkit: ^1.0.3
   genkit_google_genai: ^1.2.0
-  shelf: ^1.4.3
-  shelf_router: ^1.1.5
 
 dev_dependencies:
   flutter_test:
