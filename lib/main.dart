@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import 'configs/app_configs.dart';
-import 'features/home/view_model/home_view_model.dart';
-import 'features/settings/view/settings_screen.dart';
-import 'utils/brand_colors.dart';
-import 'utils/routes.dart';
+import 'core/constants/app_routes.dart';
+import 'core/theme/app_brand_colors.dart';
+import 'data/repositories/remote_jarvis_repository.dart';
+import 'data/services/jarvis_api_client.dart';
+import 'features/chat/chat_screen.dart';
+import 'features/conversations/conversation_details_screen.dart';
+import 'features/conversations/conversation_history_screen.dart';
+import 'features/home/home_screen.dart';
+import 'features/home/home_view_model.dart';
+import 'features/home/splash_screen.dart';
+import 'features/settings/backend_connection_screen.dart';
+import 'features/settings/settings_screen.dart';
+import 'features/voice/voice_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,10 +37,23 @@ class _JarvisAppState extends State<JarvisApp> {
 
   @override
   Widget build(BuildContext context) {
+    final apiClient = JarvisApiClient(
+      config: BackendConfig(
+        baseUrl: 'http://localhost:8080',
+        useMock: false,
+      ),
+    );
+    final remoteRepo = RemoteJarvisRepository(apiClient);
+    final voiceService = JarvisVoiceService();
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => JarvisMainViewModel(),
+          create: (_) => JarvisMainViewModel(
+            repository: remoteRepo,
+            voiceService: voiceService,
+            apiClient: apiClient,
+          ),
         ),
       ],
       child: ScreenUtilInit(
@@ -41,7 +62,7 @@ class _JarvisAppState extends State<JarvisApp> {
         splitScreenMode: true,
         builder: (context, child) {
           return MaterialApp(
-            title: AppConfigs.appName,
+            title: 'JARVIS — Personal AI Assistant',
             debugShowCheckedModeBanner: false,
             themeMode: _themeMode,
             theme: ThemeData(
@@ -64,13 +85,21 @@ class _JarvisAppState extends State<JarvisApp> {
               extensions: const [AppBrandColors.dark],
               useMaterial3: true,
             ),
-            initialRoute: Routes.splash,
+            initialRoute: AppRoutes.splash,
             routes: {
-              ...Routes.routes,
-              Routes.settings: (context) => SettingsScreen(
+              AppRoutes.splash: (context) => const SplashScreen(),
+              AppRoutes.home: (context) => const HomeScreen(),
+              AppRoutes.chat: (context) => const ChatScreen(),
+              AppRoutes.conversationHistory: (context) =>
+                  const ConversationHistoryScreen(),
+              AppRoutes.conversationDetails: (context) =>
+                  const ConversationDetailsScreen(),
+              AppRoutes.settings: (context) => SettingsScreen(
                     currentThemeMode: _themeMode,
                     onThemeModeChanged: _updateThemeMode,
                   ),
+              AppRoutes.backendConnection: (context) =>
+                  const BackendConnectionScreen(),
             },
           );
         },

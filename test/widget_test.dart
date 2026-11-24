@@ -7,5 +7,11 @@ void main() {
   ) async {
     await tester.pumpWidget(const JarvisApp());
     expect(find.byType(JarvisApp), findsOneWidget);
+    // Advance time incrementally past splash delay timers without pumpAndSettle hanging on repeat animations
+    await tester.pump(const Duration(milliseconds: 800));
+    await tester.pump(const Duration(milliseconds: 800));
+    await tester.pump(const Duration(milliseconds: 900));
+    await tester.pump(const Duration(milliseconds: 700));
+    await tester.pump(const Duration(milliseconds: 500));
   });
 }
