@@ -11,6 +11,7 @@ import '../voice/voice_service.dart';
 
 class JarvisMainViewModel extends ChangeNotifier {
   final IJarvisRepository repository;
+  final IJarvisRepository? mockRepository;
   final IVoiceService voiceService;
   final JarvisApiClient apiClient;
 
@@ -23,10 +24,18 @@ class JarvisMainViewModel extends ChangeNotifier {
 
   JarvisMainViewModel({
     required this.repository,
+    this.mockRepository,
     required this.voiceService,
     required this.apiClient,
   }) {
     init();
+  }
+
+  IJarvisRepository get _activeRepository {
+    if (apiClient.config.useMock && mockRepository != null) {
+      return mockRepository!;
+    }
+    return repository;
   }
 
   // Getters
@@ -51,13 +60,20 @@ class JarvisMainViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> setUseMock(bool useMock) async {
+    apiClient.config.useMock = useMock;
+    _activeConversation = null;
+    await refreshConnectionStatus();
+    await loadRecentConversations();
+  }
+
   Future<void> refreshConnectionStatus() async {
     if (apiClient.config.useMock) {
       _connectionStatus = BackendConnectionStatus.mockMode;
     } else {
       _connectionStatus = BackendConnectionStatus.connecting;
       notifyListeners();
-      final isHealthy = await repository.checkBackendHealth();
+      final isHealthy = await _activeRepository.checkBackendHealth();
       _connectionStatus = isHealthy
           ? BackendConnectionStatus.connected
           : BackendConnectionStatus.disconnected;
@@ -67,7 +83,7 @@ class JarvisMainViewModel extends ChangeNotifier {
 
   Future<void> loadRecentConversations() async {
     try {
-      _recentConversations = await repository.getConversations();
+      _recentConversations = await _activeRepository.getConversations();
       notifyListeners();
     } catch (e) {
       _errorMessage = e.toString();
@@ -82,7 +98,7 @@ class JarvisMainViewModel extends ChangeNotifier {
 
   Future<ConversationModel> startNewConversation({String? title}) async {
     _setLoading(true);
-    final conv = await repository.createConversation(initialTitle: title);
+    final conv = await _activeRepository.createConversation(initialTitle: title);
     _activeConversation = conv;
     await loadRecentConversations();
     _setLoading(false);
@@ -91,12 +107,12 @@ class JarvisMainViewModel extends ChangeNotifier {
 
   Future<void> selectConversation(String id) async {
     _setLoading(true);
-    _activeConversation = await repository.getConversationById(id);
+    _activeConversation = await _activeRepository.getConversationById(id);
     _setLoading(false);
   }
 
   Future<void> deleteConversation(String id) async {
-    await repository.deleteConversation(id);
+    await _activeRepository.deleteConversation(id);
     if (_activeConversation?.id == id) {
       _activeConversation = null;
     }
@@ -131,7 +147,7 @@ class JarvisMainViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final assistantReply = await repository.sendMessage(
+      final assistantReply = await _activeRepository.sendMessage(
         conversationId: convId,
         text: text.trim(),
       );

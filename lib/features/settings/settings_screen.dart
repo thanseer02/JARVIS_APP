@@ -61,7 +61,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: colors.borderSubtle),
               ),
-              child: Column(
+              child: Material(
+                type: MaterialType.transparency,
+                borderRadius: BorderRadius.circular(12),
+                clipBehavior: Clip.antiAlias,
+                child: Column(
                 children: [
                   SwitchListTile(
                     title: Text(
@@ -92,7 +96,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 24),
+          ),
+          const SizedBox(height: 24),
 
             // Section: Voice & Audio
             _buildSectionHeader('AUDIO ACOUSTICS & SYNTHESIS', colors),
@@ -102,7 +107,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: colors.borderSubtle),
               ),
-              child: Column(
+              child: Material(
+                type: MaterialType.transparency,
+                borderRadius: BorderRadius.circular(12),
+                clipBehavior: Clip.antiAlias,
+                child: Column(
                 children: [
                   SwitchListTile(
                     title: Text(
@@ -161,7 +170,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 24),
+          ),
+          const SizedBox(height: 24),
 
             // Section: Network & Engine Link
             _buildSectionHeader('INFRASTRUCTURE LINK', colors),
@@ -171,23 +181,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: colors.borderSubtle),
               ),
-              child: ListTile(
-                leading: Icon(Icons.dns_outlined, color: colors.cyanAccent),
-                title: Text(
-                  'Backend Connection',
-                  style: AppStyles.bodyLarge.copyWith(
-                    color: colors.textPrimary,
+              child: Material(
+                type: MaterialType.transparency,
+                borderRadius: BorderRadius.circular(12),
+                clipBehavior: Clip.antiAlias,
+                child: ListTile(
+                  leading: Icon(Icons.dns_outlined, color: colors.cyanAccent),
+                  title: Text(
+                    'Backend Connection',
+                    style: AppStyles.bodyLarge.copyWith(
+                      color: colors.textPrimary,
+                    ),
                   ),
-                ),
-                subtitle: Text(
-                  'Configure Shelf REST API host & health ping',
-                  style: AppStyles.caption.copyWith(
-                    color: colors.textSecondary,
+                  subtitle: Text(
+                    'Configure Shelf REST API host & health ping',
+                    style: AppStyles.caption.copyWith(
+                      color: colors.textSecondary,
+                    ),
                   ),
+                  trailing: Icon(Icons.chevron_right, color: colors.cyanAccent),
+                  onTap: () =>
+                      Navigator.pushNamed(context, AppRoutes.backendConnection),
                 ),
-                trailing: Icon(Icons.chevron_right, color: colors.cyanAccent),
-                onTap: () =>
-                    Navigator.pushNamed(context, AppRoutes.backendConnection),
               ),
             ),
             const SizedBox(height: 32),

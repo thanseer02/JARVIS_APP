@@ -126,29 +126,33 @@ class _BackendConnectionScreenState extends State<BackendConnectionScreen> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: colors.borderSubtle),
               ),
-              child: SwitchListTile(
-                title: Text(
-                  'Simulation / Mock Repository',
-                  style: AppStyles.bodyLarge.copyWith(
-                    color: colors.textPrimary,
+              child: Material(
+                type: MaterialType.transparency,
+                borderRadius: BorderRadius.circular(12),
+                clipBehavior: Clip.antiAlias,
+                child: SwitchListTile(
+                  title: Text(
+                    'Simulation / Mock Repository',
+                    style: AppStyles.bodyLarge.copyWith(
+                      color: colors.textPrimary,
+                    ),
                   ),
-                ),
-                subtitle: Text(
-                  'Enable to use realistic mock data while Phase 5 Shelf REST API is pending',
-                  style: AppStyles.caption.copyWith(
-                    color: colors.textSecondary,
+                  subtitle: Text(
+                    'Enable to use realistic mock data while Phase 5 Shelf REST API is pending',
+                    style: AppStyles.caption.copyWith(
+                      color: colors.textSecondary,
+                    ),
                   ),
+                  secondary: Icon(
+                    Icons.science_outlined,
+                    color: colors.cyanAccent,
+                  ),
+                  value: config.useMock,
+                  activeColor: colors.cyanAccent,
+                  onChanged: (val) {
+                    vm.setUseMock(val);
+                  },
                 ),
-                secondary: Icon(
-                  Icons.science_outlined,
-                  color: colors.cyanAccent,
-                ),
-                value: config.useMock,
-                activeColor: colors.cyanAccent,
-                onChanged: (val) {
-                  setState(() => config.useMock = val);
-                  vm.refreshConnectionStatus();
-                },
               ),
             ),
             const SizedBox(height: 24),

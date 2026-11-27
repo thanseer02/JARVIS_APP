@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'core/constants/app_routes.dart';
 import 'core/theme/app_brand_colors.dart';
+import 'data/repositories/mock_jarvis_repository.dart';
 import 'data/repositories/remote_jarvis_repository.dart';
 import 'data/services/jarvis_api_client.dart';
 import 'features/chat/chat_screen.dart';
@@ -40,9 +41,10 @@ class _JarvisAppState extends State<JarvisApp> {
     final apiClient = JarvisApiClient(
       config: BackendConfig(
         baseUrl: 'http://localhost:8080',
-        useMock: false,
+        useMock: true,
       ),
     );
+    final mockRepo = MockJarvisRepository();
     final remoteRepo = RemoteJarvisRepository(apiClient);
     final voiceService = JarvisVoiceService();
 
@@ -51,6 +53,7 @@ class _JarvisAppState extends State<JarvisApp> {
         ChangeNotifierProvider(
           create: (_) => JarvisMainViewModel(
             repository: remoteRepo,
+            mockRepository: mockRepo,
             voiceService: voiceService,
             apiClient: apiClient,
           ),

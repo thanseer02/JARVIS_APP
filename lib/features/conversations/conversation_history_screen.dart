@@ -195,7 +195,11 @@ class _ConversationHistoryScreenState extends State<ConversationHistoryScreen> {
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: colors.borderSubtle),
         ),
-        child: ListTile(
+        child: Material(
+          type: MaterialType.transparency,
+          borderRadius: BorderRadius.circular(12),
+          clipBehavior: Clip.antiAlias,
+          child: ListTile(
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 8,
@@ -252,10 +256,11 @@ class _ConversationHistoryScreenState extends State<ConversationHistoryScreen> {
               Navigator.pushNamed(context, AppRoutes.conversationDetails);
             },
           ),
-          onTap: () {
-            vm.selectConversation(conv.id);
-            Navigator.pushNamed(context, AppRoutes.chat);
-          },
+            onTap: () {
+              vm.selectConversation(conv.id);
+              Navigator.pushNamed(context, AppRoutes.chat);
+            },
+          ),
         ),
       ),
     );
